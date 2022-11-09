@@ -9,14 +9,14 @@ const Header = () => {
   const navigate = useNavigate();
 
   const getBrandText = () => {
-    for (let route of routes) {
+    for (const route of routes) {
       if (location.pathname.indexOf(route.path) !== -1) {
         return route.name;
       }
     }
 
     return "Brand";
-  };
+  }
 
   return (
     <Navbar bg="light" expand="lg">

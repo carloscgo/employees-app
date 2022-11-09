@@ -1,3 +1,5 @@
+import EmployeesList from '../../components/EmployeesList'
+
 export default [{
   path: '/employee/:id',
   slug: 'employee',
@@ -9,7 +11,7 @@ export default [{
 }, {
   path: '/employee/add',
   slug: 'addEmployee',
-  name: 'Employees',
+  name: 'Add New',
   icon: 'bi bi-person-plus-fill',
   component: <div>Add Employees</div>,
   isMenu: true,
@@ -19,7 +21,7 @@ export default [{
   slug: 'home',
   name: 'Dashbord',
   icon: 'bi bi-speedometer',
-  component: <div>Dashbord</div>,
+  component: <EmployeesList />,
   isMenu: true,
   index: 0
 }];

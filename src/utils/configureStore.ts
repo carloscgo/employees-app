@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Create the store with dynamic reducers
  */
-import { createStore, applyMiddleware, compose } from 'redux';
+import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 
@@ -14,8 +15,8 @@ import createReducer from './reducers';
  * @param {ConfigureStoreOptions} options - Create store options
  * @return {any} store
  */
-export default function configureStore (state: any, options: any) {
-  let composeEnhancers:any = compose
+export default function configureStore(state: any, options: any) {
+  const composeEnhancers: any = compose
   const reduxSagaMonitorOptions = {}
   const initialState = {
     ...state
@@ -29,7 +30,7 @@ export default function configureStore (state: any, options: any) {
   const middlewares = [sagaMiddleware, routerMiddleware(opts.history)]
   const enhancers = [applyMiddleware(...middlewares)]
 
-  const store:any = createStore(
+  const store: any = createStore(
     createReducer(),
     initialState,
     composeEnhancers(...enhancers)
@@ -50,4 +51,4 @@ export default function configureStore (state: any, options: any) {
   }
 
   return store
-};
+}

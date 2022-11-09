@@ -6,7 +6,13 @@ import { initialState } from './reducer';
  * Direct selector to the error state domain
  */
 
-export const selectDomain = (state: any) => state.error || initialState;
+type STATE = {
+  error: {
+    message: string | null
+  }
+}
+
+export const selectDomain = (state: STATE) => state.error || initialState;
 
 /**
  * @function makeDataSelector

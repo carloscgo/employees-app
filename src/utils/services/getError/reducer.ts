@@ -10,10 +10,18 @@ import {
 
 export const initialState = {
   message: null,
-};
+}
 
-const reducer = (state = initialState, action: any) =>
-  produce(state, (draft: any) => {
+type ACTION = {
+  type: string,
+  error: string | null
+}
+type DRAFT = {
+  message: string | null
+}
+
+const reducer = (state = initialState, action: ACTION) =>
+  produce(state, (draft: DRAFT) => {
     if (action.type === ACTION_ERROR) {
       draft.message = action.error
     }

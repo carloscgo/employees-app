@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import invariant from 'invariant';
 import { isEmpty, isFunction, isString } from 'lodash';
 import createReducer from './reducers';
- 
+
 /**
  *
  * @param {object} store - store
  * @return {object} value
  */
-export function injectReducerFactory (store: any) {
-  return function injectReducer (key: any, reducer: any) {
+export function injectReducerFactory(store: any) {
+  return function injectReducer(key: any, reducer: any) {
     invariant(
       isString(key) && !isEmpty(key) && isFunction(reducer),
       '(src/utils...) injectReducer: Expected `reducer` to be a reducer function'
@@ -23,7 +24,7 @@ export function injectReducerFactory (store: any) {
     store.injectedReducers[`${key}`] = reducer
     store.replaceReducer(createReducer(store.injectedReducers))
   }
-};
+}
 
 /**
  * get injectors
@@ -31,8 +32,8 @@ export function injectReducerFactory (store: any) {
  * @param {object} store - store
  * @return {object} object
  */
-export default function getInjectors (store: any) {
+export default function getInjectors(store: any) {
   return {
     injectReducer: injectReducerFactory(store)
   }
-};
+}

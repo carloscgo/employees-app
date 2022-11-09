@@ -1,12 +1,12 @@
 import Alert from 'react-bootstrap/Alert';
-import { Props } from './interface';
+import { PropsError } from '../../utils/interfaces';
 
-const Error = ({ message }: Props) => {
+const Error = ({ message }: PropsError) => {
   return (
     <Alert variant="danger">
       {message}
     </Alert>
   )
-};
+}
 
 export default Error;

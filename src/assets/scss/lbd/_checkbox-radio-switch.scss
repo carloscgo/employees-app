@@ -46,7 +46,7 @@
     &.disabled{
         .form-check-label{
             color: $dark-gray;
-            opacity: .5;
+            opacity: 0.5;
             cursor: not-allowed;
         }
     }
@@ -109,7 +109,7 @@
     &.disabled{
         .form-check-label{
             color: $dark-gray;
-            opacity: .5;
+            opacity: 0.5;
             cursor: not-allowed;
         }
     }
@@ -123,7 +123,7 @@
     -moz-osx-font-smoothing: grayscale;
     display: inline-block;
     position: absolute;
-    opacity: .50;
+    opacity: 0.50;
     left: 34px;
 }
 

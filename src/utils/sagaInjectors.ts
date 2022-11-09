@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import invariant from 'invariant';
 import { isEmpty, isFunction, isString, conformsTo } from 'lodash';
 
@@ -20,17 +21,16 @@ const checkDescriptor = (descriptor: any) => {
     conformsTo(descriptor, shape),
     '(src/utils...) injectSaga: Expected a valid saga descriptor'
   )
-};
+}
 
 /**
  * Inject saga favtory
  *
  * @param {*} store - Store
- * @param {*} isValid - isValid
  * @return {any} any
  */
-export function injectSagaFactory (store:any, isValid?: boolean) {
-  return function injectSaga (key: any, descriptor: any = {}, args: any = undefined) {
+export function injectSagaFactory(store: any) {
+  return function injectSaga(key: any, descriptor: any = {}, args: any = undefined) {
     const newDescriptor = {
       ...descriptor,
       mode: descriptor.mode || DAEMON
@@ -63,17 +63,16 @@ export function injectSagaFactory (store:any, isValid?: boolean) {
       /* eslint-enable no-param-reassign */
     }
   }
-};
+}
 
 /**
  * eject saga
  *
  * @param {object} store - store
- * @param {boolean} isValid - is valid
  * @return {object} is valid
  */
-export function ejectSagaFactory (store: any, isValid?: boolean) {
-  return function ejectSaga (key: any) {
+export function ejectSagaFactory(store: any) {
+  return function ejectSaga(key: any) {
     checkKey(key)
 
     if (Reflect.has(store.injectedSagas, key)) {
@@ -88,7 +87,7 @@ export function ejectSagaFactory (store: any, isValid?: boolean) {
       }
     }
   }
-};
+}
 
 /**
  * Get injectors
@@ -96,9 +95,9 @@ export function ejectSagaFactory (store: any, isValid?: boolean) {
  * @param {*} store stores
  * @return {object} object
  */
-export default function getInjectors (store: any) {
+export default function getInjectors(store: any) {
   return {
-    injectSaga: injectSagaFactory(store, true),
-    ejectSaga: ejectSagaFactory(store, true)
+    injectSaga: injectSagaFactory(store),
+    ejectSaga: ejectSagaFactory(store)
   }
-};
+}

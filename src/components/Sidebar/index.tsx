@@ -7,14 +7,14 @@ import { VITE_APP } from "../../utils/constants";
 
 import logo from "../../assets/react.svg";
 
-import { Props } from './interface';
+import { PropsSidebar, PropsRoute } from '../../utils/interfaces';
 
-const Sidebar = ({ color, image, routes }: Props) => {
+const Sidebar = ({ color, image, routes }: PropsSidebar) => {
   const location = useLocation();
 
   const activeRoute = (routeName: string) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  };
+  }
 
   return (
     <div className="sidebar" data-image={image} data-color={color}>
@@ -38,7 +38,7 @@ const Sidebar = ({ color, image, routes }: Props) => {
         </div>
 
         <Nav>
-          {orderBy(routes.filter((route: any) => route.isMenu), ['index'], ['asc']).map((prop: any, key: any) => {
+          {orderBy(routes.filter((route: PropsRoute) => route.isMenu), ['index'], ['asc']).map((prop: PropsRoute, key: number) => {
             return (
               <li
                 className={activeRoute(prop.path)}
