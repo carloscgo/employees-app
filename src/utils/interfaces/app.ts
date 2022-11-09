@@ -9,4 +9,5 @@ export interface Props {
     data: PropsEmployee
   };
   getAllRequestActionHandler: IFunc;
+  deleteRequestActionHandler: IFunc;
 }

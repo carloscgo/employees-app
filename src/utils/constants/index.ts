@@ -17,7 +17,8 @@ const VITE_APP: PropsConfig = {
 }
 
 const TITLE_PAGES = {
-  employees: 'Company Employees'
+  employees: 'Company Employees',
+  single: 'Employee Profile'
 }
 
 export {

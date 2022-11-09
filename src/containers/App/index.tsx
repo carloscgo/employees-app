@@ -29,7 +29,8 @@ import reducerError from '../../utils/services/getError/reducer';
 import reducerEmployees from '../../utils/services/employees/reducer';
 import sagaEmployees from '../../utils/services/employees/saga';
 import {
-  getAllRequestAction
+  getAllRequestAction,
+  deleteRequestAction
 } from '../../utils/services/employees/actions';
 
 import Container from './styles';
@@ -48,14 +49,12 @@ const App = ({
   error,
   employees,
   getAllRequestActionHandler,
+  deleteRequestActionHandler,
 }: PropsApp) => {
   useInjectReducer({ key: 'error', reducer: reducerError })
   useInjectReducer({ key: 'employees', reducer: reducerEmployees })
   useInjectSaga({ key: 'employees', saga: sagaEmployees })
 
-  const [image, setImage] = useState(sidebarImage);
-  const [color, setColor] = useState("black");
-  const [hasImage, setHasImage] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const mainPanel = useRef(null);
 
@@ -79,10 +78,12 @@ const App = ({
           getAllRequestActionHandler({ ...PAGE, skip: paginate.limit * currentPage })
 
           setCurrentPage(state => state + 1)
-        }
+        },
+        onDelete: (id: number) => deleteRequestActionHandler(id),
+        onSave: (e: any) => console.log(e)
       }}>
       <Container fluid className="d-flex flex-nowrap p-0">
-        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
+        <Sidebar color="black" image={sidebarImage} routes={routes} />
 
         <div className="main-panel" ref={mainPanel}>
           <NavBar />
@@ -92,11 +93,13 @@ const App = ({
 
             <Loading show={loading} />
 
-            <Routes>
-              {routes.map((route: PropsRoute, index: number) => (
-                <Route key={index} path={route.path} index={!route.index} element={route.component} />
-              ))}
-            </Routes>
+            {!loading &&
+              <Routes>
+                {routes.map((route: PropsRoute, index: number) => (
+                  <Route key={index} path={route.path} index={!route.index} element={route.component} />
+                ))}
+              </Routes>
+            }
           </Container.Content>
 
           <Footer />
@@ -112,7 +115,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export const mapDispatchToProps = (dispatch: IFunc) => ({
-  getAllRequestActionHandler: (data: IPaginate) => dispatch(getAllRequestAction(data))
+  getAllRequestActionHandler: (data: IPaginate) => dispatch(getAllRequestAction(data)),
+  deleteRequestActionHandler: (id: number) => dispatch(deleteRequestAction(id))
 });
 
 const withConnect = connect(

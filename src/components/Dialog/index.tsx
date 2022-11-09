@@ -1,12 +1,25 @@
+import { useState, useEffect } from 'react';
 import { Modal, Button } from "react-bootstrap";
 
 import { PropsDialog } from "../../utils/interfaces";
 
-const Dialog = ({ title, message, lblClose, lblAction, onAction }: PropsDialog) => {
+const Dialog = ({ open, title, message, lblClose, lblAction, onAction, onClose }: PropsDialog) => {
+  const [show, setShow] = useState(open);
+
+  useEffect(() => {
+    setShow(open)
+  }, [open])
+
+  const handleClose = () => {
+    onClose && onClose()
+
+    setShow(false)
+  }
+
   return (
-    <Modal.Dialog>
+    <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title className='text-bold'>{title}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -14,11 +27,10 @@ const Dialog = ({ title, message, lblClose, lblAction, onAction }: PropsDialog) 
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary">{lblClose}</Button>
+        <Button variant="secondary" onClick={() => handleClose()}>{lblClose}</Button>
         <Button variant="primary" onClick={onAction}>{lblAction}</Button>
       </Modal.Footer>
-    </Modal.Dialog>
-
+    </Modal>
   );
 }
 

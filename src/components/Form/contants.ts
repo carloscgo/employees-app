@@ -25,6 +25,15 @@ export const ROWS: Array<Props> = [{
   prop: 'age',
   label: 'Age',
 }, {
-  prop: 'action',
-  label: 'Action',
+  prop: 'actions',
+  label: 'Actions',
 }]
+
+export const messages = {
+  dialog: {
+    title: 'Warning',
+    message: 'Are you sure to delete the employee?',
+    lblClose: 'No',
+    lblAction: 'Yes'
+  }
+}

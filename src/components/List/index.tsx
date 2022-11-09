@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useState } from "react"
 import { Table, Row, Col, Card, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -9,11 +9,21 @@ import {
   PropsEmployee, Paginate, IFunc
 } from '../../utils/interfaces';
 
-import { ROWS, Props } from './contants'
+import Dialog from '../Dialog'
+
+import { ROWS, Props, messages } from './contants'
 import Container from './styles'
 
-const EmployeesList = () => {
-  const { employees, paginate, onLoad } = useContext(Context) as { employees: Array<PropsEmployee>, paginate: Paginate, onLoad: IFunc };
+const List = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [toDelete, setToDelete] = useState<null | number>(null);
+
+  const { employees, paginate, onLoad, onDelete } = useContext(Context) as {
+    employees: Array<PropsEmployee>,
+    paginate: Paginate,
+    onLoad: IFunc,
+    onDelete: IFunc
+  };
 
   const canLoad = useMemo(() => (paginate.limit + paginate.skip) < paginate.total, [paginate])
 
@@ -23,8 +33,25 @@ const EmployeesList = () => {
 
   const mapId = (item: any) => routeDetails?.path.replace(':id', item.id)
 
+  const propsDialog = {
+    open: showDialog,
+    ...messages.dialog,
+    onAction: () => {
+      onDelete(toDelete)
+      setShowDialog(false)
+    },
+    onClose: () => setShowDialog(false)
+  }
+
+  const onDeleteHandler = (id: number) => {
+    setToDelete(id)
+    setShowDialog(true)
+  }
+
   return (
     <Container fluid>
+      <Dialog {...propsDialog} />
+
       <Row>
         <Col md="12">
           <Card className="strpied-tabled-with-hover">
@@ -46,10 +73,16 @@ const EmployeesList = () => {
                       {ROWS.map((row: Props) => (
                         <td key={`${row.prop}-${item.id}`}>
                           {row.prop === 'image' ? <Image className="avatar" roundedCircle thumbnail src={getValue(item, row.prop)} /> : getValue(item, row.prop)}
-                          {row.prop === 'action' && (
-                            <Button className="btn-link" onClick={() => mapId(item.id)}>
-                              <i className="bu bi-trash-fill text-danger"></i>
-                            </Button>
+                          {row.prop === 'actions' && (
+                            <div className="actions">
+                              <Link to={mapId(item.id) as string}>
+                                <i className="bu bi-pencil-square text-primary"></i>
+                              </Link>
+
+                              <Button className="btn-delete" variant="link" onClick={() => onDeleteHandler(item.id)}>
+                                <i className="bu bi-trash-fill text-danger"></i>
+                              </Button>
+                            </div>
                           )}
                         </td>
                       ))}
@@ -73,4 +106,4 @@ const EmployeesList = () => {
   );
 }
 
-export default EmployeesList;
+export default List;

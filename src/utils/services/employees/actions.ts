@@ -87,11 +87,13 @@ export const addSuccessAction = (data: Array<IEmployee>) => ({
 
 /**
  * @function updateRequestAction
- * @param {PropsEmployee} data - Employee
+ * @param {number} id - Employee ID
+ * @param {IEmployee} data - Employee
  * @return {object} { type, data }
  */
-export const updateRequestAction = (data: PropsEmployee) => ({
+export const updateRequestAction = (id: number, data: IEmployee) => ({
   type: UPDATE_ACTION_REQUEST,
+  id,
   data
 });
 

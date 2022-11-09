@@ -22,6 +22,14 @@ const mapError = (e: unknown) => {
   }
 }
 
+const newID = () => {
+  const id = parseInt(getStorage('ID', 10000)) + 1
+
+  setStorage('ID', id)
+
+  return id
+}
+
 export {
   connect,
   createStructuredSelector,
@@ -32,5 +40,6 @@ export {
   setStorage,
   getStorage,
   searchRoute,
-  mapError
+  mapError,
+  newID
 }
