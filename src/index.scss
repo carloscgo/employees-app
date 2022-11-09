@@ -1,0 +1,14 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import "./assets/css/animate.min.css";
+@import "./assets/scss/light-bootstrap-dashboard-react.scss"; 
+
+body {
+  min-height: 100vh;
+  height: max-content;
+
+  #root {
+    min-height: 100vh;
+    height: max-content;
+  }
+}
