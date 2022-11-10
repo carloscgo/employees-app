@@ -12,4 +12,5 @@ export interface Props {
   deleteRequestActionHandler: IFunc;
   addRequestActionHandler: IFunc;
   updateRequestActionHandler: IFunc;
+  cleanErrorActionHandler: IFunc;
 }

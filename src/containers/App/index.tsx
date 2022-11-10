@@ -27,6 +27,10 @@ import {
   makeDataSelector as makeDataSelectorError
 } from '../../utils/services/getError/selectors';
 import {
+  cleanErrorAction
+} from '../../utils/services/getError/actions';
+
+import {
   makeDataSelector as makeDataSelectorEmployees
 } from '../../utils/services/employees/selectors';
 import reducerError from '../../utils/services/getError/reducer';
@@ -63,6 +67,7 @@ const App = ({
   deleteRequestActionHandler,
   addRequestActionHandler,
   updateRequestActionHandler,
+  cleanErrorActionHandler,
 }: PropsApp) => {
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -138,11 +143,11 @@ const App = ({
           onSave: ({ type, data }: PropForm) => handlerForm(type.toString(), data)
         }}>
         <Container fluid className="d-flex flex-nowrap p-0">
-          <Sidebar color="black" image={sidebarImage} routes={routes} />
+          <Sidebar color="black" onClean={cleanErrorActionHandler} image={sidebarImage} routes={routes} />
           <Toast open={toast} title="Success" message={data.message} onClose={() => setToast(false)} />
 
           <div className="main-panel">
-            <NavBar />
+            <NavBar onClean={cleanErrorActionHandler} />
 
             <Container.Content className={`${data.loading ? 'p-0' : ''}`}>
               {error && <Error message={error} />}
@@ -176,6 +181,7 @@ export const mapDispatchToProps = (dispatch: IFunc) => ({
   deleteRequestActionHandler: (id: number) => dispatch(deleteRequestAction(id)),
   addRequestActionHandler: (data: IEmployee) => dispatch(addRequestAction(data)),
   updateRequestActionHandler: (id: number, data: IEmployee) => dispatch(updateRequestAction(id, data)),
+  cleanErrorActionHandler: () => dispatch(cleanErrorAction()),
 });
 
 const withConnect = connect(

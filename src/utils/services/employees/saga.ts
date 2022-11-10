@@ -15,7 +15,7 @@ import {
   addSuccessAction,
 } from './actions';
 import {
-  getErrorAction,
+  getErrorAction, cleanErrorAction
 } from '../getError/actions';
 
 /** CONSTANTS */
@@ -63,6 +63,8 @@ const mapFields = (user: PropsEmployee) => ({
  */
 export function* getAll({ limit, skip }: Paginate) {
   try {
+    yield put(cleanErrorAction())
+
     const { users, limit: limitP, skip: skipP, total } = yield axios({
       method: endpoints.list.method,
       url: endpoints.list.path,
@@ -86,6 +88,8 @@ export function* getAll({ limit, skip }: Paginate) {
  */
 export function* deleteEmployee({ id }: ID) {
   try {
+    yield put(cleanErrorAction())
+
     yield axios({
       method: endpoints.delete.method,
       url: endpoints.delete.path.replace(':id', id.toString())
@@ -103,6 +107,8 @@ export function* deleteEmployee({ id }: ID) {
  */
 export function* updateEmployee({ id, data }: Data) {
   try {
+    yield put(cleanErrorAction())
+
     yield axios({
       method: endpoints.update.method,
       url: endpoints.update.path.replace(':id', id.toString()),
@@ -124,6 +130,8 @@ export function* updateEmployee({ id, data }: Data) {
  */
 export function* addEmployee({ data }: { data: IEmployee }) {
   try {
+    yield put(cleanErrorAction())
+
     const user: PropsEmployee = yield axios({
       method: endpoints.add.method,
       url: endpoints.add.path,

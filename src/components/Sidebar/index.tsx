@@ -9,7 +9,7 @@ import logo from "../../assets/react.svg";
 
 import { PropsSidebar, PropsRoute } from '../../utils/interfaces';
 
-const Sidebar = ({ color, image, routes }: PropsSidebar) => {
+const Sidebar = ({ color, image, routes, onClean }: PropsSidebar) => {
   const location = useLocation();
 
   const activeRoute = (routeName: string) => {
@@ -26,7 +26,7 @@ const Sidebar = ({ color, image, routes }: PropsSidebar) => {
       />
       <div className="sidebar-wrapper">
         <div className="logo px-0 d-flex align-items-center justify-content-center">
-          <Link to={searchRoute('home')} className="logo-mini d-flex align-items-center mx-1">
+          <Link to={searchRoute('home')} onClick={() => onClean()} className="logo-mini d-flex align-items-center mx-1">
             <div className="logo-img">
               <img src={logo} alt="..." />
             </div>
@@ -46,6 +46,7 @@ const Sidebar = ({ color, image, routes }: PropsSidebar) => {
               >
                 <NavLink
                   to={prop.path}
+                  onClick={() => onClean()}
                   className="nav-link"
                 >
                   <i className={prop.icon} />
@@ -56,7 +57,7 @@ const Sidebar = ({ color, image, routes }: PropsSidebar) => {
           })}
         </Nav>
       </div>
-    </div>
+    </div >
   );
 }
 

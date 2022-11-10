@@ -3,8 +3,9 @@ import { Navbar, Container } from "react-bootstrap";
 
 import routes from '../../utils/routes';
 import { searchRoute } from "../../utils/services";
+import { IFunc } from "../../utils/interfaces";
 
-const Header = () => {
+const Header = ({ onClean }: { onClean: IFunc }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,7 +25,10 @@ const Header = () => {
         <div className="d-flex justify-content-center align-items-center ml-2 ml-lg-0">
           <Navbar.Brand
             href="#home"
-            onClick={() => navigate(searchRoute('home'))}
+            onClick={() => {
+              onClean()
+              navigate(searchRoute('home'))
+            }}
             className="mr-2"
           >
             {getBrandText()}
