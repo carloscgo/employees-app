@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { useInjectReducer } from '../injectReducer';
 import { useInjectSaga } from '../injectSaga';
-import { VITE_APP, routes } from '../constants';
+import { VITE_APP } from '../constants';
+import routes from '../routes';
 
 axios.defaults.baseURL = `https://${VITE_APP.API_HOST}/`;
 

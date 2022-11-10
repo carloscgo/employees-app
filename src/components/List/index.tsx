@@ -4,7 +4,8 @@ import { Table, Row, Col, Card, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Context from '../../utils/context';
-import { TITLE_PAGES, routes } from '../../utils/constants';
+import { TITLE_PAGES } from '../../utils/constants';
+import routes from '../../utils/routes';
 import {
   PropsEmployee, Paginate, IFunc
 } from '../../utils/interfaces';
@@ -31,7 +32,7 @@ const List = () => {
 
   const routeDetails = routes.find((route) => route.slug === 'employee')
 
-  const mapId = (item: any) => routeDetails?.path.replace(':id', item.id)
+  const mapId = (id: number) => routeDetails?.path.replace(':id', id.toString())
 
   const propsDialog = {
     open: showDialog,

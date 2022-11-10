@@ -37,7 +37,8 @@ export const initialState = {
     limit: 10,
     skip: 0,
     total: 0
-  }
+  },
+  message: null
 }
 
 type ACTION = {
@@ -45,18 +46,26 @@ type ACTION = {
   list: Array<PropsEmployee>,
   single: PropsEmployee,
   id: number,
-  paginate: Paginate
+  paginate: Paginate,
+  message: string,
 }
 type DRAFT = {
   loading: boolean,
   data: Array<PropsEmployee>,
-  paginate?: Paginate
+  paginate?: Paginate,
+  message: string | null,
 }
 
 const removeEmployee = (list: Array<PropsEmployee>, id: number) => {
   remove(list, (item) => item.id === id)
 
   return list
+}
+
+const updateEmployee = (list: Array<PropsEmployee>, user: PropsEmployee) => {
+  removeEmployee(list, user.id)
+
+  return [...list, user]
 }
 
 const reducer = (state = initialState, action: ACTION) =>
@@ -68,6 +77,7 @@ const reducer = (state = initialState, action: ACTION) =>
       case UPDATE_ACTION_REQUEST:
       case DELETE_ACTION_REQUEST:
         draft.loading = true
+        draft.message = null
         break
 
       case GET_ALL_ACTION_SUCCESS:
@@ -83,20 +93,28 @@ const reducer = (state = initialState, action: ACTION) =>
 
       case GET_SINGLE_ACTION_SUCCESS:
       case ADD_ACTION_SUCCESS:
-      case UPDATE_ACTION_SUCCESS:
         draft.loading = false
         draft.data = uniqBy([
           ...state.data,
           action.single
-        ], 'email')
+        ], 'id')
+        draft.message = action.message
+
+        setStorage('employees', draft.data)
+        break
+
+      case UPDATE_ACTION_SUCCESS:
+        draft.loading = false
+        draft.data = updateEmployee(draft.data, action.single)
+        draft.message = action.message
 
         setStorage('employees', draft.data)
         break
 
       case DELETE_ACTION_SUCCESS:
         draft.loading = false
-
         draft.data = removeEmployee(draft.data, action.id)
+        draft.message = action.message
 
         setStorage('employees', draft.data)
         break

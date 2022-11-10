@@ -10,7 +10,7 @@ const endpoints = {
     method: 'get'
   },
   add: {
-    path: `/users`,
+    path: `/users/add`,
     method: 'post'
   },
   update: {

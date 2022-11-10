@@ -23,3 +23,12 @@ export const UPDATE_ACTION_SUCCESS = `${scope}UPDATE_ACTION_SUCCESS`;
 /** DELETE_ACTION_REQUEST */
 export const DELETE_ACTION_REQUEST = `${scope}DELETE_ACTION_REQUEST`;
 export const DELETE_ACTION_SUCCESS = `${scope}DELETE_ACTION_SUCCESS`;
+
+export const messages = {
+  toast: {
+    title: 'Success',
+    messageUpdate: 'The change was made correctly',
+    messageAdd: 'The record was added successfully',
+    messageDelete: 'The record deleted successfully'
+  }
+}

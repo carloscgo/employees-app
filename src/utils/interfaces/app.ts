@@ -10,4 +10,6 @@ export interface Props {
   };
   getAllRequestActionHandler: IFunc;
   deleteRequestActionHandler: IFunc;
+  addRequestActionHandler: IFunc;
+  updateRequestActionHandler: IFunc;
 }

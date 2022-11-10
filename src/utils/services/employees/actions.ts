@@ -77,12 +77,14 @@ export const addRequestAction = (data: IEmployee) => ({
 
 /**
  * @function addSuccessAction
- * @param {Array<IEmployee>} data - Employees
- * @return {object} { type, data }
+ * @param {PropsEmployee} single - Employee
+ * @param {string} message - Message
+ * @return {object} { type, single }
  */
-export const addSuccessAction = (data: Array<IEmployee>) => ({
+export const addSuccessAction = (single: PropsEmployee, message: string) => ({
   type: ADD_ACTION_SUCCESS,
-  data
+  single,
+  message
 });
 
 /**
@@ -99,12 +101,14 @@ export const updateRequestAction = (id: number, data: IEmployee) => ({
 
 /**
  * @function updateSuccessAction
- * @param {PropsEmployee} data - Employees
+ * @param {PropsEmployee} single - Employees
+ * @param {string} message - Message
  * @return {object} { type, data }
  */
-export const updateSuccessAction = (data: PropsEmployee) => ({
+export const updateSuccessAction = (single: PropsEmployee, message: string) => ({
   type: UPDATE_ACTION_SUCCESS,
-  data
+  single,
+  message
 });
 
 /**
@@ -120,9 +124,11 @@ export const deleteRequestAction = (id: number) => ({
 /**
  * @function deleteSuccessAction
  * @param {number} id - Employee ID
+ * @param {string} message - Message
  * @return {object} { type, id }
  */
-export const deleteSuccessAction = (id: number) => ({
+export const deleteSuccessAction = (id: number, message: string) => ({
   type: DELETE_ACTION_SUCCESS,
-  id
+  id,
+  message
 });

@@ -5,7 +5,7 @@ export interface IEmployee {
   firstName: string;
   lastName: string;
   image: string;
-  age: number;
+  age: number | string;
   gender: string;
 }
 

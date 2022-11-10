@@ -19,6 +19,10 @@ const FormContainer = styled(Container)`
     width: 60px;
     height: 60px;
   }
+
+  .buttons {
+    gap: 20px
+  }
 `;
 
 export default FormContainer;

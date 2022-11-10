@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar, Container } from "react-bootstrap";
 
-import { routes } from "../../utils/constants";
+import routes from '../../utils/routes';
 import { searchRoute } from "../../utils/services";
 
 const Header = () => {

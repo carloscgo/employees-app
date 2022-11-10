@@ -5,7 +5,8 @@ import { Props as PropsSidebar } from './sidebar';
 import { Props as PropsConfig } from './config';
 import { Props as PropsEmployee, IEmployee } from './employee';
 import { Props as PropsDialog } from './dialog';
-import { IFunc, IPaginate, ILoading, Paginate } from './common';
+import { Props as PropsToast } from './toast';
+import { IFunc, IPaginate, ILoading, ITypeForm, Paginate } from './common';
 
 export type {
   PropsApp,
@@ -15,9 +16,11 @@ export type {
   PropsConfig,
   PropsEmployee,
   PropsDialog,
+  PropsToast,
   IEmployee,
   IFunc,
   IPaginate,
   ILoading,
+  ITypeForm,
   Paginate
 }

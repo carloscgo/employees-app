@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * sagas
  */
@@ -11,6 +12,7 @@ import {
   getAllSuccessAction,
   deleteSuccessAction,
   updateSuccessAction,
+  addSuccessAction,
 } from './actions';
 import {
   getErrorAction,
@@ -21,10 +23,12 @@ import {
   GET_ALL_ACTION_REQUEST,
   DELETE_ACTION_REQUEST,
   UPDATE_ACTION_REQUEST,
+  ADD_ACTION_REQUEST,
+  messages
 } from './constants';
 import { mapError } from '../index';
 import {
-  IPaginate, IEmployee
+  IPaginate, IEmployee, PropsEmployee
 } from '../../interfaces';
 import {
   endpoints
@@ -42,6 +46,16 @@ type Data = {
   id: number,
   data: IEmployee
 }
+
+const mapFields = (user: PropsEmployee) => ({
+  'id': user.id,
+  'firstName': user.firstName,
+  'lastName': user.lastName,
+  'age': user.age,
+  'gender': user.gender,
+  'email': user.email,
+  'image': user.image
+})
 
 /**
  * @function getAll
@@ -77,7 +91,7 @@ export function* deleteEmployee({ id }: ID) {
       url: endpoints.delete.path.replace(':id', id.toString())
     })
 
-    yield put(deleteSuccessAction(id))
+    yield put(deleteSuccessAction(id, messages.toast.messageDelete))
   } catch (err: unknown) {
     yield put(getErrorAction(mapError(err) as string))
   }
@@ -92,31 +106,79 @@ export function* updateEmployee({ id, data }: Data) {
     yield axios({
       method: endpoints.update.method,
       url: endpoints.update.path.replace(':id', id.toString()),
-      data
+      data: {
+        ...data,
+        image: `https://i.pravatar.cc/150?u=${data.email}`
+      }
     })
 
-    yield put(updateSuccessAction({ id, ...data }))
+    yield put(updateSuccessAction(mapFields({ id, ...data } as PropsEmployee), messages.toast.messageUpdate))
   } catch (err: unknown) {
     yield put(getErrorAction(mapError(err) as string))
   }
 }
 
 /**
- * @function watchEmployeesAction
- * @yields
+ * @function addEmployee
+ * @yields addSuccessAction / getErrorAction
  */
-export function* watchEmployeesAction() {
-  yield takeLatest(GET_ALL_ACTION_REQUEST, getAll)
-  yield takeLatest(DELETE_ACTION_REQUEST, deleteEmployee)
-  yield takeLatest(UPDATE_ACTION_REQUEST, updateEmployee)
+export function* addEmployee({ data }: { data: IEmployee }) {
+  try {
+    const user: PropsEmployee = yield axios({
+      method: endpoints.add.method,
+      url: endpoints.add.path,
+      data: {
+        ...data,
+        image: `https://i.pravatar.cc/150?u=${data.email}`
+      }
+    }).then((response: any) => response.data)
+
+    yield put(addSuccessAction(mapFields(user), messages.toast.messageAdd))
+  } catch (err: unknown) {
+    yield put(getErrorAction(mapError(err) as string))
+  }
 }
 
+/**
+ * @function watchGetEmployeesAction
+ * @yields
+ */
+export function* watchGetEmployeesAction() {
+  yield takeLatest(GET_ALL_ACTION_REQUEST as any, getAll)
+}
+
+/**
+ * @function watchDeleteEmployeesAction
+ * @yields
+ */
+export function* watchDeleteEmployeesAction() {
+  yield takeLatest(DELETE_ACTION_REQUEST as any, deleteEmployee)
+}
+
+/**
+ * @function watchUpdateEmployeesAction
+ * @yields
+ */
+export function* watchUpdateEmployeesAction() {
+  yield takeLatest(UPDATE_ACTION_REQUEST as any, updateEmployee)
+}
+
+/**
+ * @function watchAddEmployeesAction
+ * @yields
+ */
+export function* watchAddEmployeesAction() {
+  yield takeLatest(ADD_ACTION_REQUEST as any, addEmployee)
+}
 /**
  * @function saga
  * @yields all actions required
  */
 export default function* saga() {
   yield all([
-    watchEmployeesAction(),
+    watchGetEmployeesAction(),
+    watchDeleteEmployeesAction(),
+    watchUpdateEmployeesAction(),
+    watchAddEmployeesAction()
   ])
 }
