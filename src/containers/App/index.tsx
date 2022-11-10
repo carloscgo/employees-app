@@ -157,7 +157,7 @@ const App = ({
               {!data.loading &&
                 <Routes>
                   {routes.map((route: PropsRoute, index: number) => (
-                    <Route key={index} path={route.path} index={!route.index} element={route.component} />
+                    <Route key={index} path={route.path} element={route.component} />
                   ))}
                 </Routes>
               }
