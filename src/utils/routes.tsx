@@ -25,4 +25,12 @@ export default [{
   component: <List />,
   isMenu: true,
   index: 0
+}, {
+  path: '*',
+  slug: 'home',
+  name: 'Dashbord',
+  icon: 'bi bi-speedometer',
+  component: <List />,
+  isMenu: false,
+  index: 0
 }];
