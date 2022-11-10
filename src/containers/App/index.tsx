@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import get from "lodash/get";
 import unset from "lodash/unset";
 
@@ -19,6 +19,7 @@ import {
   compose,
   useInjectReducer,
   useInjectSaga,
+  searchRoute
 } from '../../utils/services';
 import Context from '../../utils/context';
 
@@ -64,6 +65,10 @@ const App = ({
   updateRequestActionHandler,
 }: PropsApp) => {
   const [currentPage, setCurrentPage] = useState(1)
+
+  const location = useLocation()
+  const navigate = useNavigate()
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>({
     loading: false,
@@ -84,6 +89,12 @@ const App = ({
   useEffect(() => {
     setToast(!!data.message)
   }, [data.message])
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate(searchRoute('home'))
+    }
+  }, [location.pathname])
 
   useEffect(() => {
     setData({
