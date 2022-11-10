@@ -10,7 +10,7 @@ const Header = () => {
 
   const getBrandText = () => {
     for (const route of routes) {
-      if (location.pathname.indexOf(route.path) !== -1) {
+      if (location.pathname.indexOf(route.path) !== -1 || location.pathname.indexOf('/edit/') !== -1) {
         return route.name;
       }
     }
